@@ -1,65 +1,80 @@
-import React, { useState } from 'react';
+import React from 'react';
+import SearchBox from './components/search-box.jsx'
+import Location from './components/location.jsx'
+import DateTime from './components/datetime.jsx'
+import Temperature from './components/temperature'
+import Weather from './components/weather'
+
 const api = {
   key: "208785914316c48739fa81461e32198d",
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
-function App() {
-  const [query, setQuery] = useState('');
-  const [weather, setWeather] = useState({});
+class App extends React.Component {
+  
+  constructor(){
+    super();
+    this.state = {
+      city: undefined,
+      country: undefined,
+      temp: undefined,
+      weather: undefined,
+      error: false,
+      main: undefined
+    };
+  }
 
-  const search = evt => {
-    if(evt.key === "Enter"){
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-      .then(res => res.json())
-      .then(result => {
-        setWeather(result);
-        setQuery('');
+  getWeather = async e => {
+    e.preventDefault();
+
+    const city = e.target.elements.city.value;
+
+    if(city){
+      const api_call = await fetch(
+        `${api.base}weather?q=${city}&units=metric&APPID=${api.key}`
+        );
+        
+      const result = await api_call.json();
+          
+      this.setState({
+          city: `${result.name}`,
+          country: result.sys.country,
+          temp: result.main.temp,
+          weather: result.weather[0].main,
+          main: result.weather[0].main
+        })
+
         console.log(result);
-      })
+    } else {
+      this.setState({error: true});
     }
+    
   }
-  
-  const dateBuilder = (d) => {
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let days = ["Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()]
-    let year = d.getFullYear();
-
-    return `${day} ${date} ${month} ${year}`
+  render() {
+    return (
+      <div className='App'>
+        <main>
+          <SearchBox loadweather={this.getWeather} error={this.state.error}/>
+          {(typeof this.state.main !="undefined") ? (
+            <div>
+              <div className="location-box">
+                <Location 
+                  city={this.state.city} 
+                  country={this.state.country}
+                />
+                <DateTime/>
+              </div>
+              <div className="weather-box">
+                <Temperature temp={this.state.temp}/>
+                <Weather weather={this.state.weather}/>
+              </div>
+            </div>
+          ) : ('')}
+        </main>
+      </div>
+    );
   }
-  
-  return (
-    <div className={(typeof weather.main !="undefined") ? ((weather.main.temp > 10) ? 'app warm' : 'app') : 'app'}>
-      <main>
-        <div className="search-box">
-          <input
-            type="text"
-            className="search-bar"
-            placeholder="Search..."
-            onChange={e => setQuery(e.target.value)}
-            value={query}
-            onKeyPress={search}
-          />
-        </div>
-        {(typeof weather.main !="undefined") ? (
-          <div>
-            <div className="location-box">
-              <div className="location">{weather.name}, {weather.sys.country}</div>
-              <div className="date">{dateBuilder(new Date())}</div>
-            </div>
-            <div className="weather-box">
-        <div className="temp">{Math.round(weather.main.temp)}°C</div>
-        <div className="weather">{weather.weather[0].main}</div>
-            </div>
-        </div>
-        ) : ('')}
-      </main>
-    </div>
-  );
 }
 
 export default App;
