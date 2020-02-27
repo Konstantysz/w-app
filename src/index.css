@@ -57,6 +57,11 @@ main {
   background-color: rgba(255, 255, 255, 0.75);
 }
 
+.content-box {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+}
+
 .location-box .location {
   color: #FFF;
   font-size: 32px;
@@ -82,7 +87,7 @@ main {
   position: relative;
   display: inline-block;
   margin: 30px auto;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 16px;
 
   padding: 15px 25px;
@@ -99,6 +104,22 @@ main {
 .weather-box .weather {
   color: #FFF;
   font-size: 48px;
+  font-weight: 700px;
+  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+}
+
+.weather-box .humidity {
+  padding: 5px;
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 700px;
+  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+}
+
+.weather-box .pressure {
+  padding: 5px;
+  color: #FFF;
+  font-size: 16px;
   font-weight: 700px;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 }

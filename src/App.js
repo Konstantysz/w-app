@@ -1,9 +1,7 @@
-import React from 'react';
-import SearchBox from './components/search-box.jsx'
-import Location from './components/location.jsx'
-import DateTime from './components/datetime.jsx'
-import Temperature from './components/temperature'
-import Weather from './components/weather'
+import React from 'react'
+import SearchBox from './components/search-box'
+import LocationBox from './components/location-box'
+import WeatherBox from './components/weather-box'
 
 const api = {
   key: "208785914316c48739fa81461e32198d",
@@ -20,7 +18,9 @@ class App extends React.Component {
       temp: undefined,
       weather: undefined,
       error: false,
-      main: undefined
+      main: undefined,
+      humidity: undefined,
+      pressure: undefined
     };
   }
 
@@ -41,7 +41,9 @@ class App extends React.Component {
           country: result.sys.country,
           temp: result.main.temp,
           weather: result.weather[0].main,
-          main: result.weather[0].main
+          main: result.weather[0].main,
+          humidity: result.main.humidity,
+          pressure: result.main.pressure
         })
 
         console.log(result);
@@ -57,18 +59,17 @@ class App extends React.Component {
         <main>
           <SearchBox loadweather={this.getWeather} error={this.state.error}/>
           {(typeof this.state.main !="undefined") ? (
-            <div>
-              <div className="location-box">
-                <Location 
-                  city={this.state.city} 
-                  country={this.state.country}
-                />
-                <DateTime/>
-              </div>
-              <div className="weather-box">
-                <Temperature temp={this.state.temp}/>
-                <Weather weather={this.state.weather}/>
-              </div>
+            <div className="content-box">
+              <LocationBox 
+                city={this.state.city} 
+                country={this.state.country}
+              />
+              <WeatherBox 
+                temp={this.state.temp} 
+                weather={this.state.weather}
+                humidity={this.state.humidity}
+                pressure={this.state.pressure}
+              />
             </div>
           ) : ('')}
         </main>
