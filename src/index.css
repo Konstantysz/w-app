@@ -58,6 +58,7 @@ main {
 }
 
 .content-box {
+  padding: 10px;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
 }
@@ -109,7 +110,6 @@ main {
 }
 
 .weather-box .humidity {
-  padding: 5px;
   color: #FFF;
   font-size: 16px;
   font-weight: 700px;
@@ -117,9 +117,15 @@ main {
 }
 
 .weather-box .pressure {
-  padding: 5px;
   color: #FFF;
   font-size: 16px;
   font-weight: 700px;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+}
+
+.temperature-graph {
+  margin: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
 }
