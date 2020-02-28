@@ -4,64 +4,55 @@ import CanvasJSReact from '../assets/canvasjs.react';
 // var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+let temperature_array = [];
 
-const TemperatureGraph = props => {
+function timeConverter(UNIX_timestamp){
+	return new Date(UNIX_timestamp * 1000);
+}
 
-	// const temperature_array = this.props;
+class TemperatureGraph extends React.Component {
+	render() {
+		var options = {
+			animationEnabled: true,
+			exportEnabled: true,
+			theme: "light2", // "light1", "dark1", "dark2"
+			title:{
+				text: "Temperature forecast"
+			},
+			axisY: {
+				title: "Temperature",
+				includeZero: false,
+				suffix: "°C"
+			},
+			axisX: {
+				title: "Time",
+				valueFormatString: "DD MMM YYYY H:mm"
+			},
+			data: [{
+				type: "line",
+				toolTipContent: "{x} - {y}°C",
+				dataPoints: temperature_array
+			}]
+		}
 
-	const options = {
-		animationEnabled: true,
-		exportEnabled: true,
-		theme: "light2", // "light1", "dark1", "dark2"
-		title:{
-			text: "Temperature in last hours"
-		},
-		axisY: {
-			title: "Temperature",
-			includeZero: false,
-			suffix: "°C"
-		},
-		axisX: {
-			title: "Hour",
-			interval: 3
-		},
-		data: [{
-			type: "line",
-			toolTipContent: "{x} - {y}%",
-			dataPoints: [
-				{ x: 1, y: 64 },
-				{ x: 2, y: 61 },
-				{ x: 3, y: 64 },
-				{ x: 4, y: 62 },
-				{ x: 5, y: 64 },
-	    		{ x: 6, y: 60 },
-				{ x: 7, y: 58 },
-				{ x: 8, y: 59 },
-				{ x: 9, y: 53 },
-				{ x: 10, y: 54 },
-				{ x: 11, y: 61 },
-				{ x: 12, y: 60 },
-				{ x: 13, y: 55 },
-				{ x: 14, y: 60 },
-				{ x: 15, y: 56 },
-				{ x: 16, y: 60 },
-				{ x: 17, y: 59.5 },
-				{ x: 18, y: 63 },
-				{ x: 19, y: 58 },
-				{ x: 20, y: 54 },
-				{ x: 21, y: 59 },
-				{ x: 22, y: 64 },
-				{ x: 23, y: 59 }
-			]
-		}]
+		console.log(options.data[0].dataPoints)
+
+		return (
+			<div className="temperature-graph">
+					<CanvasJSChart 
+						options = {options}
+						onRef={ref => this.chart = ref}
+					/>
+			</div>
+		);
 	}
-	return (
-	<div className="temperature-graph">
-		<CanvasJSChart options = {options}
-			/* onRef={ref => this.chart = ref} */
-		/>
-		{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-	</div>
-	);
+
+	componentDidMount(){
+		var chart = this.chart;
+		for (let i = 0; i < this.props.graphdata.length; i++)  {
+			temperature_array.push({x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp});
+		}
+		chart.render();
+	}
 }
 export default TemperatureGraph     

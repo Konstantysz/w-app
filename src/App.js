@@ -34,8 +34,8 @@ class App extends React.Component {
     if(city){
       
       Promise.all([
-        fetch(`${api.base}weather?q=${city}&units=metric&APPID=${api.key}`).then(val => val.json()),
-        fetch(`${api.base}forecast?q=${city}&appid=${api.key}`).then(val => val.json())
+        fetch(`${api.base}weather?q=${city}&units=metric&appid=${api.key}`).then(val => val.json()),
+        fetch(`${api.base}forecast?q=${city}&units=metric&appid=${api.key}`).then(val => val.json())
       ]).then(([weatherresult, forecastresult]) => {
 
         this.setState({
@@ -46,12 +46,9 @@ class App extends React.Component {
           main: weatherresult.weather[0].main,
           humidity: weatherresult.main.humidity,
           pressure: weatherresult.main.pressure,
-          graphdata: forecastresult.list
+          graphdata: forecastresult
         })
 
-        console.log(weatherresult);
-        console.log(forecastresult);
-   
       }).catch((err) => {
         console.log(err);
       });
@@ -67,7 +64,7 @@ class App extends React.Component {
       <div className='App'>
         <main>
           <SearchBox loadweather={this.getWeather} error={this.state.error}/>
-          {(typeof this.state.main !="undefined") ? (
+          {(typeof this.state.main !='undefined') ? (
             <div>
               <div className="content-box">
                 <LocationBox 
@@ -81,7 +78,9 @@ class App extends React.Component {
                   pressure={this.state.pressure}
                 />
               </div>
-              <TemperatureGraph graphdata={this.state.graphdata}/>
+              {(typeof this.state.graphdata !='undefined') ? (
+                <TemperatureGraph graphdata={this.state.graphdata.list}/>
+              ) : ('')}
             </div>
           ) : ('')}
         </main>
