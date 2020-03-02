@@ -54,5 +54,13 @@ class TemperatureGraph extends React.Component {
 		}
 		chart.render();
 	}
+
+	componentDidUpdate() {
+		var chart = this.chart;
+		for (let i = 0; i < this.props.graphdata.length; i++)  {
+			temperature_array[i] = {x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp};
+		}
+		chart.render();
+	}
 }
 export default TemperatureGraph     

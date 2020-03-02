@@ -1,4 +1,5 @@
 import React from 'react';
+// import TemperatureGraph from './temperature-graph'
 
 const Weather = props => {
         return (

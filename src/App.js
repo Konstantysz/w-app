@@ -79,8 +79,8 @@ class App extends React.Component {
                 />
               </div>
               {(typeof this.state.graphdata !='undefined') ? (
-                <TemperatureGraph graphdata={this.state.graphdata.list}/>
-              ) : ('')}
+                    <TemperatureGraph graphdata={this.state.graphdata.list}/>
+                ) : ('')}
             </div>
           ) : ('')}
         </main>
