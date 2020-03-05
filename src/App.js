@@ -3,9 +3,10 @@ import SearchBox from './components/search-box'
 import LocationBox from './components/location-box'
 import WeatherBox from './components/weather-box'
 import TemperatureGraph from './components/temperature-graph'
+import API_KEY from "./config.json";
 
 const api = {
-  key: "208785914316c48739fa81461e32198d",
+  key: API_KEY,
   base: "https://api.openweathermap.org/data/2.5/"
 }
 
