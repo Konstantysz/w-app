@@ -8,7 +8,7 @@ const SearchBox = props => {
                     <input
                         type="text"
                         className="search-bar"
-                        placeholder="City"
+                        placeholder="Enter city name for its weather"
                         name="city"
                         autoComplete="off"
                     />
@@ -19,9 +19,10 @@ const SearchBox = props => {
 }
 
 function error() {
+    console.log('Error with searchbox occured')
     return (
-        <div>Error Kurwa</div>
-    );
+        <div>Error</div>
+    )
 }
 
 export default SearchBox

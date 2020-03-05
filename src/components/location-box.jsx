@@ -3,14 +3,16 @@ import React from 'react';
 const LocationBox = props => {
 
     const dateBuilder = (d) => {
-        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        let days = ["Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday", "Sunday"];
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        let days = [ "Sunday", "Monday", "Tuesday", "Wednsday", "Thursday", "Friday", "Saturday"]
     
-        let day = days[d.getDay()];
-        let date = d.getDate();
+        //Asigns values for each variable based on Date class methods
+        let day = days[d.getDay()] 
+        let date = d.getDate()
         let month = months[d.getMonth()]
-        let year = d.getFullYear();
+        let year = d.getFullYear()
     
+        //Returns string with date
         return `${day} ${date} ${month} ${year}`
     }
 

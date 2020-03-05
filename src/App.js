@@ -27,17 +27,20 @@ class App extends React.Component {
   }
 
   getWeather = async e => {
-    e.preventDefault();
+    e.preventDefault(); // Prevents the default event side-effect from occurring
 
-    const city = e.target.elements.city.value;
+    const city = e.target.elements.city.value // Returns a reference to the element to which the event was originally sent.
 
+    // If city is not undefined, so loaded correctly
     if(city){
       
+      // Asynchronously fetching jsons file from the API
       Promise.all([
         fetch(`${api.base}weather?q=${city}&units=metric&appid=${api.key}`).then(val => val.json()),
         fetch(`${api.base}forecast?q=${city}&units=metric&appid=${api.key}`).then(val => val.json())
       ]).then(([weatherresult, forecastresult]) => {
 
+        // Changes state of App component asigning values from json file
         this.setState({
           city: `${weatherresult.name}`,
           country: weatherresult.sys.country,
@@ -50,11 +53,11 @@ class App extends React.Component {
         })
 
       }).catch((err) => {
-        console.log(err);
+        console.log(err); // Any error cought in fetching with API is going to be displayed at console
       });
       
     } else {
-      this.setState({error: true});
+      this.setState({error: true}); // If city is undefined state of error in App component is set to true
     }
     
   }
@@ -64,6 +67,7 @@ class App extends React.Component {
       <div className='App'>
         <main>
           <SearchBox loadweather={this.getWeather} error={this.state.error}/>
+          {/* If the state is not loaded yet or at all, nothing is displayed below searchbox */}
           {(typeof this.state.main !='undefined') ? (
             <div>
               <div className="content-box">
@@ -78,6 +82,7 @@ class App extends React.Component {
                   pressure={this.state.pressure}
                 />
               </div>
+              {/* If the data for the graph is not loaded yet or at all, nothing is displayed */}
               {(typeof this.state.graphdata !='undefined') ? (
                     <TemperatureGraph graphdata={this.state.graphdata.list}/>
                 ) : ('')}

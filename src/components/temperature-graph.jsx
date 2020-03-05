@@ -1,13 +1,12 @@
 import React from 'react';
 import CanvasJSReact from '../assets/canvasjs.react';
 
-// var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart
 
-let temperature_array = [];
+let temperature_array = []
 
 function timeConverter(UNIX_timestamp){
-	return new Date(UNIX_timestamp * 1000);
+	return new Date(UNIX_timestamp*1000)
 }
 
 class TemperatureGraph extends React.Component {
@@ -15,7 +14,7 @@ class TemperatureGraph extends React.Component {
 		var options = {
 			animationEnabled: true,
 			exportEnabled: true,
-			theme: "light2", // "light1", "dark1", "dark2"
+			theme: "light2",
 			title:{
 				text: "Temperature forecast"
 			},
@@ -35,8 +34,6 @@ class TemperatureGraph extends React.Component {
 			}]
 		}
 
-		console.log(options.data[0].dataPoints)
-
 		return (
 			<div className="temperature-graph">
 					<CanvasJSChart 
@@ -50,17 +47,17 @@ class TemperatureGraph extends React.Component {
 	componentDidMount(){
 		var chart = this.chart;
 		for (let i = 0; i < this.props.graphdata.length; i++)  {
-			temperature_array.push({x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp});
+			temperature_array.push({x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp})
 		}
-		chart.render();
+		chart.render()
 	}
 
 	componentDidUpdate() {
 		var chart = this.chart;
 		for (let i = 0; i < this.props.graphdata.length; i++)  {
-			temperature_array[i] = {x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp};
+			temperature_array[i] = {x: timeConverter(this.props.graphdata[i].dt), y: this.props.graphdata[i].main.temp}
 		}
-		chart.render();
+		chart.render()
 	}
 }
 export default TemperatureGraph     
