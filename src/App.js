@@ -55,7 +55,7 @@ class App extends React.Component {
 
       }).catch((err) => {
         console.log(err); // Any error cought in fetching with API is going to be displayed at console
-      });
+      })
       
     } else {
       this.setState({error: true}); // If city is undefined state of error in App component is set to true
