@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   getWeather = async e => {
-    e.preventDefault(); // Prevents the default event side-effect from occurring
+    e.preventDefault() // Prevents the default event side-effect from occurring
 
     const city = e.target.elements.city.value // Returns a reference to the element to which the event was originally sent.
 
